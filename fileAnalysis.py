@@ -86,21 +86,24 @@ def findTestTechs(techLookup, fileExtension, fileContents):
         Return: A list containing references to the TestFrameworkToken objects
                 that were matched in the file
     """
-    techList = techLookup[fileExtension]
-    matchedTechs = []
+    try:
+        techList = techLookup[fileExtension]
+        matchedTechs = []
 
-    for testToken in techList:
-        #print(testToken.tokenString)
-        
-        techPattern = re.compile(testToken.tokenString)
-        match = techPattern.search(fileContents, re.IGNORECASE|re.MULTILINE)
-        
-        #print(testToken.tokenString, fileContents)
-        
-        if(match):
-            matchedTechs += [testToken.tokenString]
-                
-    return matchedTechs
+        for testToken in techList:
+            #print(testToken.tokenString)
+            
+            techPattern = re.compile(testToken.tokenString)
+            match = techPattern.search(fileContents, re.IGNORECASE|re.MULTILINE)
+            
+            #print(testToken.tokenString, fileContents)
+            
+            if(match):
+                matchedTechs += [testToken.tokenString]
+                    
+        return matchedTechs
+    except KeyError:
+        return []
 
 def findKeywordTechs(keywordLookup, fileExtension, fileContents):
     """
